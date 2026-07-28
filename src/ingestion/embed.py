@@ -1,5 +1,6 @@
 from sentence_transformers import SentenceTransformer
 from typing import List
+from parse import chunk
 
 def embed(chunks: List):
     """
