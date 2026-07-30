@@ -1,6 +1,6 @@
 from docling.document_converter import DocumentConverter
+from langchain_text_splitters import MarkdownHeaderTextSplitter
 
-link = 'https://static.anaf.ro/static/10/Anaf/legislatie/Cod_fiscal_norme_2016.htm'
 
 def chunk(source: str):
     """
@@ -12,9 +12,13 @@ def chunk(source: str):
 
     document = result.document
     markdown_text = document.export_to_markdown()
-    
-    chunks = markdown_text.split("\n\n")
-    return chunks, []
 
-chunks, metadata = chunk(link)
-print(chunks[10015])
+    headers_to_split_on = [("ART.", "Header")]
+
+    splitter = MarkdownHeaderTextSplitter(headers_to_split_on=headers_to_split_on)
+    splits = splitter.split_text(markdown_text)
+    
+    chunks = [split.page_content for split in splits]
+    metadata = [split.metadata for split in splits]
+    return chunks, metadata
+
