@@ -1,5 +1,6 @@
-from langchain_openai import ChatOpenAI
-from rag import document_search
+import os
+from langchain_groq import ChatGroq
+from .rag import document_search
 
 
 def question_answer(question):
@@ -9,17 +10,21 @@ def question_answer(question):
     for fragment in text:
         context = context + fragment + "\n\n---\n\n"
 
-    prompt = f"""Ești un asistent fiscal expert în legislația din România.
-                Răspunde la întrebare folosind DOAR informațiile furnizate mai jos.
+    prompt = f"""Esti un asistent fiscal expert in legistatia din Romania.
+                Raspunde la intrebare folosind doar informatiile furnizate mai jos.
+                Adauga surse.
 
                 CONTEXT DIN CODUL FISCAL:
                 {context}
 
-                ÎNTREBARE:
+                INTREBARE:
                 {question}"""
 
 
-    llm = ChatOpenAI(model="gpt-4o-mini")
+    llm = ChatGroq(
+                    model="openai/gpt-oss-120b"
+                    ,groq_api_key=os.getenv("GROQ_API_KEY")
+                   )
     answer = llm.invoke(prompt)
     return answer.content
 

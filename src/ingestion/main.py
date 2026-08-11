@@ -5,4 +5,4 @@ from vectorstore import save_embeddings
 chunks, metadata = chunk(link)
 embeddings = embed(chunks)
 
-save_embeddings (embeddings)
+save_embeddings(embeddings)
