@@ -1,5 +1,8 @@
 import streamlit as st
 from src.rag.llm import question_answer
+from src.rag.monitoring import init_phoenix
+
+init_phoenix()
 
 st.set_page_config(page_title="RO Tax Advisor", layout="centered")
 st.title("RO Tax Advisor")

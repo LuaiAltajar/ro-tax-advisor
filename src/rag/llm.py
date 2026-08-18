@@ -1,7 +1,9 @@
 import os
 from langchain_groq import ChatGroq
 from .rag import document_search
+from dotenv import load_dotenv
 
+load_dotenv()
 
 def question_answer(question):
     text, metadata = document_search(question)
